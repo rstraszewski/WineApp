@@ -1,0 +1,140 @@
+﻿@using Wine.Web.Models
+@using Wine.Core.Entities
+<div class="row" style="margin-bottom: 15px; margin-top: 15px;">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-default" id="filter" type="button">Search</button>
+            </span>
+            <input type="text" class="form-control" id="filterCriteria" placeholder="Search for..."/>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-default" data-target="#addWineModal" data-toggle="modal" type="button">Add wine</button>
+    </div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="wineListItemTemplate">
+    <div class="row wine well" style="margin-left: 0; margin-right: 0">
+        <div class="col-md-12">
+            <div class="col-md-1">
+                <img width="80" height="80" src="data:image/png;base64,#:ThumbnailBase64#" alt="#:Name#" />
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4>#:Name#</h4>
+                    </div>
+                    <div class="col-md-1 edit-buttons">
+                        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+                    </div>
+                </div>
+                <div class="row">
+                    Category: #:Category# | Region: #:Region# | Varietal: #:Varietal#
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div class="demo-section k-content wide">
+    @(Html.Kendo().ListView<WineListItem>().Name("wineList").TagName("div").ClientTemplateId("wineListItemTemplate").DataSource(dataSource => dataSource
+          .Model(c => c.Id(m => m.Id))
+          .Read(read => read.Action("GetWineList", "Wine").Data("getFilterCriteria"))
+          .PageSize(4)
+          .Destroy(x => x.Action("Remove", "Wine"))
+          .Create(x => x.Action("Create", "Wine"))).Pageable(x => x.ButtonCount(5).Enabled(true).PageSizes(new[] {4, 10, 25, 100}).Refresh(true)).Selectable().Events(x => x.Change("selectionChanged")).Editable())
+</div>
+
+
+<div id="addWineModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add wine</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="addWine" action="@Url.Action("Create")">
+                    <div class="form-group">
+                        <label class="control-label">Name:</label>
+                        <input required type="text" class="form-control" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Description:</label>
+                        <textarea required class="form-control" name="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Region:</label>
+                        <input required class="form-control" name="region">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" style="width: 100%">Year:</label>
+                                @(Html.Kendo().NumericTextBox().Min(1500).Max(DateTime.Now.Year).Decimals(0).Format("#").Name("year"))
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" style="width: 100%">Varietal:</label>
+                                @(Html.Kendo().DropDownList().Name("varietal").BindTo(Enum.GetNames(typeof(Varietal)).ToList()))
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" style="width: 100%">Category:</label>
+                                @(Html.Kendo().DropDownList().Name("category").BindTo(Enum.GetNames(typeof(Category)).ToList()))
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Thumbnail:</label>
+                                @(Html.Kendo().Upload().Multiple(false).Events(x => x.Select("removeValidation")
+                                      .Remove("addValidation")).Name("thumbnail"))
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" form="addWine" class="btn btn-primary">Add wine</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    var removeValidation = function() {
+        $(".k-upload input").removeAttr("required");
+    };
+    var addValidation = function() {
+        $(".k-upload input").attr("required", "required");
+    };
+    $(function() {
+        $("#filter")
+            .click(function() {
+                $("#wineList").data("kendoListView").dataSource.read();
+            });
+
+        $('#filterCriteria')
+            .keypress(function(e) {
+                if (e.which === 13) {
+                    $("#wineList").data("kendoListView").dataSource.read();
+                }
+            });
+
+        $("#addWineModal input").attr("required", "required");
+    });
+    var model;
+    var selectionChanged = function(e) {
+        var selected = this.select();
+        model = this.dataSource.getByUid(selected.attr("data-uid"));
+        window.location.href = '@Url.Action("Details", "Wine")' + "?id=" + model.Id;
+    };
+    var getFilterCriteria = function() {
+        var filterCritera = $("#filterCriteria").val();
+
+        return { filterCritera: filterCritera };
+    };
+</script>
