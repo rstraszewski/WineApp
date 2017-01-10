@@ -25,6 +25,7 @@ namespace Wine.Web.Controllers
             return View("Index");
         }
 
+        [Authorize]
         public ActionResult Details(int id)
         {
             var wine = _dbContext.Wines.Find(id);
@@ -107,6 +108,7 @@ namespace Wine.Web.Controllers
 
         public new void Dispose()
         {
+            _dbContext.Dispose();
             base.Dispose();
         }
     }

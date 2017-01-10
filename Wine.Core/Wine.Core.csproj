@@ -52,7 +52,10 @@
   <ItemGroup>
     <Compile Include="DataAccess\WineDbContext.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Credentials.cs" />
     <Compile Include="Entities\Review.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Varietal.cs" />
     <Compile Include="Helpers\EnumExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
