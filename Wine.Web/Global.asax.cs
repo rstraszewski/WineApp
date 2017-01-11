@@ -49,10 +49,6 @@ namespace Wine.Web
 
                                 roles = user.Roles.ToList();
                             }
-                            //let us extract the roles from our own custom cookie
-
-
-                            //Let us set the Pricipal with our user specific details
                             HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(
                                 new System.Security.Principal.GenericIdentity(username, "Forms"), roles.Select(x => x.Name).ToArray());
                         }
