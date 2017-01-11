@@ -24,6 +24,8 @@ namespace Wine.Web
             using (WineDbContext dbContext = new WineDbContext())
             {
                 dbContext.Database.CreateIfNotExists();
+                dbContext.Roles.Add(new Role() { Name = "Standard" });
+                dbContext.SaveChanges();
             }
         }
 

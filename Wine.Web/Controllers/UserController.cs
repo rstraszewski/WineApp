@@ -30,12 +30,17 @@ namespace Wine.Web.Controllers
         {
             var user = new User(newUser.UserName, newUser.Email, newUser.Password);
             user.Roles.Add(_dbContext.Roles.First(x => x.Name == "Standard"));
-
-            _dbContext.Users.Add(user);
-
-            _dbContext.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                _dbContext.Users.Add(user);
+                _dbContext.SaveChanges();
+            }
+            catch
+            {
+                return View("Failed");
+            }
+            
+            return View("Success");
         }
 
         [HttpGet]
@@ -47,12 +52,21 @@ namespace Wine.Web.Controllers
         [HttpPost]
         public ActionResult Login(LoginUser newUser)
         {
-            var credentials = _dbContext.Users.Where(x => x.Username == newUser.Username).Select(x => x.Credentials).First();
-            var validatePassword = credentials.ValidatePassword(newUser.Password);
-
-            if (validatePassword)
+            try
             {
-                FormsAuthentication.SetAuthCookie(newUser.Username, false);
+                var credentials = _dbContext.Users.Where(x => x.Username == newUser.Username).Select(x => x.Credentials).First();
+
+
+                var validatePassword = credentials.ValidatePassword(newUser.Password);
+
+                if (validatePassword)
+                {
+                    FormsAuthentication.SetAuthCookie(newUser.Username, false);
+                }
+            }
+            catch
+            {
+                return View("Failed");
             }
 
             return RedirectToAction("Index", "Home");
