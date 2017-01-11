@@ -32,6 +32,7 @@ namespace Wine.Web.Controllers
             user.Roles.Add(_dbContext.Roles.First(x => x.Name == "Standard"));
 
             _dbContext.Users.Add(user);
+
             _dbContext.SaveChanges();
 
             return RedirectToAction("Index", "Home");
@@ -47,7 +48,6 @@ namespace Wine.Web.Controllers
         public ActionResult Login(LoginUser newUser)
         {
             var credentials = _dbContext.Users.Where(x => x.Username == newUser.Username).Select(x => x.Credentials).First();
-
             var validatePassword = credentials.ValidatePassword(newUser.Password);
 
             if (validatePassword)

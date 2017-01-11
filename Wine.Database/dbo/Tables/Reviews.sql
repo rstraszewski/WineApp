@@ -3,7 +3,12 @@
     [WineId]   INT             NOT NULL,
     [Body]     NVARCHAR (2048) NOT NULL,
     [UserName] NVARCHAR (128)  NOT NULL,
-    [Created]  DATETIME        NOT NULL
+    [Created]  DATETIME        NOT NULL,
     CONSTRAINT [FK_dbo.Reviews_dbo.Wines_WineId] FOREIGN KEY ([WineId]) REFERENCES [dbo].[Wines] ([Id]) ON DELETE CASCADE
 );
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_WineId]
+    ON [dbo].[Reviews]([WineId] ASC);
 

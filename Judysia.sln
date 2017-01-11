@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineDataLoader", "WineDataL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wine.Core", "Wine.Core\Wine.Core.csproj", "{66256454-AA7F-4724-891A-55B1E93093B9}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Wine.Database", "Wine.Database\Wine.Database.sqlproj", "{7039087B-5D82-4727-B7C7-ACE363B82065}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Wine.Database", "Wine.Database\Wine.Database.sqlproj", "{EC123D16-99F2-4183-B45E-FD8B397A8DDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +29,12 @@ Global
 		{66256454-AA7F-4724-891A-55B1E93093B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66256454-AA7F-4724-891A-55B1E93093B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66256454-AA7F-4724-891A-55B1E93093B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7039087B-5D82-4727-B7C7-ACE363B82065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7039087B-5D82-4727-B7C7-ACE363B82065}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7039087B-5D82-4727-B7C7-ACE363B82065}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{7039087B-5D82-4727-B7C7-ACE363B82065}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7039087B-5D82-4727-B7C7-ACE363B82065}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7039087B-5D82-4727-B7C7-ACE363B82065}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{EC123D16-99F2-4183-B45E-FD8B397A8DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC123D16-99F2-4183-B45E-FD8B397A8DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC123D16-99F2-4183-B45E-FD8B397A8DDB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EC123D16-99F2-4183-B45E-FD8B397A8DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC123D16-99F2-4183-B45E-FD8B397A8DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC123D16-99F2-4183-B45E-FD8B397A8DDB}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

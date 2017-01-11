@@ -7,7 +7,7 @@
     <Name>Wine.Database</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{7039087b-5d82-4727-b7c7-ace363b82065}</ProjectGuid>
+    <ProjectGuid>{ec123d16-99f2-4183-b45e-fd8b397a8ddb}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
@@ -64,7 +64,11 @@
     <Folder Include="dbo\Tables\" />
   </ItemGroup>
   <ItemGroup>
+    <Build Include="dbo\Tables\Roles.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Tables\Credentials.sql" />
     <Build Include="dbo\Tables\Wines.sql" />
     <Build Include="dbo\Tables\Reviews.sql" />
+    <Build Include="dbo\Tables\UserRoles.sql" />
   </ItemGroup>
 </Project>

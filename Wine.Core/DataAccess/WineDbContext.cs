@@ -80,11 +80,13 @@ namespace Wine.Core.DataAccess
             modelBuilder.Entity<User>()
                 .HasRequired(x => x.Credentials)
                 .WithMany()
-                .HasForeignKey(x => x.CredentialsId);
+                .HasForeignKey(x => x.CredentialsId)
+                .WillCascadeOnDelete();
 
             modelBuilder.Entity<User>()
                 .HasMany(x => x.Roles)
-                .WithMany();
+                .WithMany()
+                .Map(x => x.ToTable("UserRoles").MapLeftKey("UserId").MapRightKey("RoleId"));
 
             modelBuilder.Entity<Role>()
                 .Property(x => x.Name)

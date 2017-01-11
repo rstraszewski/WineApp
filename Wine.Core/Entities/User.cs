@@ -6,7 +6,6 @@ namespace Wine.Core.Entities
     {
         private User()
         {
-            
         }
 
         public User(string username, string email, string password)
@@ -27,6 +26,6 @@ namespace Wine.Core.Entities
 
         public virtual Credentials Credentials { get; set; }
 
-        public virtual IList<Role> Roles { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }
