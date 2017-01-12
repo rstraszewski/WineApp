@@ -27,5 +27,7 @@ namespace Wine.Core.Entities
         public virtual Credentials Credentials { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
+
+        public virtual ICollection<Review> Rewievs { get; set; }
     }
 }

@@ -28,9 +28,9 @@ namespace Wine.Core.Entities
 
         public virtual IList<Review> Reviews { get; private set; }
 
-        public void AddReview(string body, string username)
+        public void AddReview(string body, User user)
         {
-            Reviews.Add(new Review(body, username));
+            Reviews.Add(new Review(body, user));
         }
     }
 }

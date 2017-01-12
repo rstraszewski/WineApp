@@ -35,7 +35,7 @@ namespace Wine.Web.Controllers
                 _dbContext.Users.Add(user);
                 _dbContext.SaveChanges();
             }
-            catch
+            catch(Exception e)
             {
                 return View("Failed");
             }

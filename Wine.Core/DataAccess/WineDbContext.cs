@@ -88,6 +88,11 @@ namespace Wine.Core.DataAccess
                 .WithMany()
                 .Map(x => x.ToTable("UserRoles").MapLeftKey("UserId").MapRightKey("RoleId"));
 
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.Rewievs)
+                .WithRequired()
+                .WillCascadeOnDelete();
+
             modelBuilder.Entity<Role>()
                 .Property(x => x.Name)
                 .HasMaxLength(128)
