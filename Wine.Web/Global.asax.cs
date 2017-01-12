@@ -20,13 +20,6 @@ namespace Wine.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            using (WineDbContext dbContext = new WineDbContext())
-            {
-                dbContext.Database.CreateIfNotExists();
-                dbContext.Roles.Add(new Role() { Name = "Standard" });
-                dbContext.SaveChanges();
-            }
         }
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
