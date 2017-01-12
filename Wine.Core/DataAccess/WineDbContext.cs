@@ -15,6 +15,7 @@ namespace Wine.Core.DataAccess
         public WineDbContext() : base("WineDatabase")
         {
             Configuration.LazyLoadingEnabled = true;
+            Database.SetInitializer<WineDbContext>(null);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
