@@ -76,8 +76,8 @@ namespace Wine.Web.Controllers
         public ActionResult AddReview(int id, string review, string username)
         {
             var wine = _dbContext.Wines.Find(id);
-
-            wine.AddReview(review, username);
+            var user = _dbContext.Users.Include("Rewievs").First(x => x.Username == HttpContext.User.Identity.Name);
+            wine.AddReview(review, user);
 
             _dbContext.SaveChanges();
 

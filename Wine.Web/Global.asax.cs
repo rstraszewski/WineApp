@@ -47,12 +47,19 @@ namespace Wine.Web
 
                             using (WineDbContext dbContext = new WineDbContext())
                             {
-                                var user = dbContext.Users.Include("Roles").First(u => u.Username == username);
+                                var user = dbContext.Users.Include("Roles").FirstOrDefault(u => u.Username == username);
 
-                                roles = user.Roles.ToList();
+                                roles = user?.Roles?.ToList();
                             }
-                            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(
-                                new System.Security.Principal.GenericIdentity(username, "Forms"), roles.Select(x => x.Name).ToArray());
+                            //let us extract the roles from our own custom cookie
+
+
+                            //Let us set the Pricipal with our user specific details
+                            if (roles != null)
+                            {
+                                HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(
+                                    new System.Security.Principal.GenericIdentity(username, "Forms"), roles.Select(x => x.Name).ToArray());
+                            }
                         }
                     }
                     catch (Exception)

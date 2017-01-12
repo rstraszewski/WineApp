@@ -8,10 +8,11 @@ namespace Wine.Core.Entities
         {
         }
 
-        public Review(string body, string username)
+        public Review(string body, User user)
         {
-            UserName = username;
+            UserName = user.Username;
             Body = body;
+            UserId = user.Id;
             Created = DateTime.Now;
         }
 
@@ -24,5 +25,7 @@ namespace Wine.Core.Entities
         public string UserName { get; set; }
 
         public DateTime Created { get; set; }
+
+        public int UserId { get; set; }
     }
 }
