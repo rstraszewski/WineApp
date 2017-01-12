@@ -2,7 +2,7 @@
 	-- Add the parameters for the stored procedure here
 	@page INT,
 	@pageSize INT,
-	@filterCriteria VARCHAR = NULL
+	@filterCriteria VARCHAR(MAX) = NULL
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from

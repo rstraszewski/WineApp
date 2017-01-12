@@ -12,7 +12,7 @@ namespace WineDataLoader
     {
         static void Main(string[] args)
         {
-            var result = "http://services.wine.com/api/beta2/service.svc/json/catalog?apikey=0f354f5704c4dc771135836f2f84a997&size=100".GetJsonAsync().Result;
+            var result = "http://services.wine.com/api/beta2/service.svc/json/catalog?apikey=0f354f5704c4dc771135836f2f84a997&size=1000&offset=0".GetJsonAsync().Result;
             var wineList = ((IEnumerable<dynamic>)result.Products.List).Where(x => x.Type == "Wine");
 
             var wines = wineList.AsParallel().Select(ToWineEntity).ToList();
