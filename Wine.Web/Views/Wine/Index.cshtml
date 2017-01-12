@@ -41,6 +41,7 @@
     @(Html.Kendo().ListView<WineListItem>().Name("wineList").TagName("div").ClientTemplateId("wineListItemTemplate").DataSource(dataSource => dataSource
           .Model(c => c.Id(m => m.Id))
           .Read(read => read.Action("GetWineList", "Wine").Data("getFilterCriteria"))
+          .ServerOperation(true)
           .PageSize(4)
           .Destroy(x => x.Action("Remove", "Wine"))
           .Create(x => x.Action("Create", "Wine"))).Pageable(x => x.ButtonCount(5).Enabled(true).PageSizes(new[] {4, 10, 25, 100}).Refresh(true)).Selectable().Events(x => x.Change("selectionChanged")).Editable())

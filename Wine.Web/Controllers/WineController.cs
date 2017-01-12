@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -85,10 +86,13 @@ namespace Wine.Web.Controllers
 
         public ActionResult GetWineList([DataSourceRequest] DataSourceRequest request, string filterCritera)
         {
-            var wines = _dbContext.Wines.Where(x => x.Search.Contains(filterCritera)).ToList();
-
+            filterCritera = string.IsNullOrWhiteSpace(filterCritera) ? null : filterCritera;
+            var wines = _dbContext.Database.SqlQuery<Core.Entities.Wine>("GetWineList @page = {0}, @pageSize = {1}, @filterCriteria = {2}", 
+                    request.Page - 1, request.PageSize, filterCritera);
             var list = wines.Select(ToListItem);
-            var dataSourceResult = list.ToDataSourceResult(request);
+            var dataSourceResult = new DataSourceResult();
+            dataSourceResult.Data = list;
+            dataSourceResult.Total = _dbContext.Wines.Count();
             return Json(dataSourceResult, JsonRequestBehavior.AllowGet);
         }
 
