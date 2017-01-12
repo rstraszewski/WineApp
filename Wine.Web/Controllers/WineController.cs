@@ -85,7 +85,7 @@ namespace Wine.Web.Controllers
 
         public ActionResult GetWineList([DataSourceRequest] DataSourceRequest request, string filterCritera)
         {
-            var wines = _dbContext.Wines.Where(x => x.Name.Contains(filterCritera)).ToList();
+            var wines = _dbContext.Wines.Where(x => x.Search.Contains(filterCritera)).ToList();
 
             var list = wines.Select(ToListItem);
             var dataSourceResult = list.ToDataSourceResult(request);

@@ -26,6 +26,8 @@ namespace Wine.Core.Entities
 
         public int Vintage { get; set; }
 
+        public string Search { get; private set; }
+
         public virtual IList<Review> Reviews { get; private set; }
 
         public void AddReview(string body, User user)

@@ -75,7 +75,7 @@ namespace Wine.Web.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-
+            var username = HttpContext.User.Identity.Name;
             return RedirectToAction("Index", "Home");
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using Wine.Core.Entities;
 
 namespace Wine.Core.DataAccess
@@ -49,6 +50,10 @@ namespace Wine.Core.DataAccess
                 .Property(x => x.Thumbnail)
                 .IsMaxLength()
                 .IsRequired();
+
+            modelBuilder.Entity<Entities.Wine>()
+                .Property(x => x.Search)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
             modelBuilder.Entity<Entities.Wine>()
                 .HasKey(x => x.Id)
