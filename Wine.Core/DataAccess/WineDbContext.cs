@@ -69,9 +69,8 @@ namespace Wine.Core.DataAccess
                 .IsRequired();
 
             modelBuilder.Entity<Review>()
-                .Property(x => x.UserName)
-                .HasMaxLength(128)
-                .IsRequired();
+                .HasRequired(x => x.User)
+                .WithMany();
 
             modelBuilder.Entity<User>()
                 .Property(x => x.Email)
@@ -94,11 +93,6 @@ namespace Wine.Core.DataAccess
                 .WithMany()
                 .Map(x => x.ToTable("UserRoles").MapLeftKey("UserId").MapRightKey("RoleId"));
 
-            modelBuilder.Entity<User>()
-                .HasMany(x => x.Rewievs)
-                .WithRequired()
-                .WillCascadeOnDelete();
-
             modelBuilder.Entity<Role>()
                 .Property(x => x.Name)
                 .HasMaxLength(128)
@@ -113,7 +107,6 @@ namespace Wine.Core.DataAccess
                 .Property(x => x.Salt)
                 .HasMaxLength(32)
                 .IsRequired();
-
         }
     }
 }

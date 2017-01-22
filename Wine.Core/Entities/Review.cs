@@ -4,25 +4,24 @@ namespace Wine.Core.Entities
 {
     public class Review
     {
+        public int Id { get; set; }
+
         private Review()
         {
         }
 
         public Review(string body, User user)
         {
-            UserName = user.Username;
             Body = body;
-            UserId = user.Id;
+            User = user;
             Created = DateTime.Now;
         }
 
         public int WineId { get; set; }
 
-        public int Id { get; set; }
+        public virtual User User { get; set; }
 
         public string Body { get; set; }
-
-        public string UserName { get; set; }
 
         public DateTime Created { get; set; }
 

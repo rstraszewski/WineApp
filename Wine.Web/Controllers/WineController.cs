@@ -21,19 +21,21 @@ namespace Wine.Web.Controllers
             _dbContext = new WineDbContext();
         }
 
+        [Authorize(Roles = "Viewer")]
         public ActionResult Index()
         {
             return View("Index");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Viewer")]
         public ActionResult Details(int id)
         {
-            var wine = _dbContext.Wines.Find(id);
+            var wine = _dbContext.Wines.Include("Reviews").Include("Reviews.User").First(x => x.Id == id);
 
             return View("Details", wine);
         }
 
+        [Authorize(Roles = "WineManager")]
         public ActionResult Remove([DataSourceRequest] DataSourceRequest request, int id)
         {
             var wine = _dbContext.Wines.Find(id);
@@ -43,6 +45,7 @@ namespace Wine.Web.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
+        [Authorize(Roles = "WineManager")]
         public ActionResult Create([DataSourceRequest] DataSourceRequest request, CreateWine wine)
         {
             var entity = ToEntityWine(wine);
@@ -76,7 +79,7 @@ namespace Wine.Web.Controllers
         public ActionResult AddReview(int id, string review, string username)
         {
             var wine = _dbContext.Wines.Find(id);
-            var user = _dbContext.Users.Include("Rewievs").First(x => x.Username == HttpContext.User.Identity.Name);
+            var user = _dbContext.Users.First(x => x.Username == HttpContext.User.Identity.Name);
             wine.AddReview(review, user);
 
             _dbContext.SaveChanges();
@@ -84,6 +87,7 @@ namespace Wine.Web.Controllers
             return RedirectToAction("Details", new { id });
         }
 
+        [Authorize(Roles = "Viewer")]
         public ActionResult GetWineList([DataSourceRequest] DataSourceRequest request, string filterCritera)
         {
             filterCritera = string.IsNullOrWhiteSpace(filterCritera) ? null : filterCritera;
@@ -93,6 +97,7 @@ namespace Wine.Web.Controllers
             var dataSourceResult = new DataSourceResult();
             dataSourceResult.Data = list;
             dataSourceResult.Total = _dbContext.Wines.Count();
+            
             return Json(dataSourceResult, JsonRequestBehavior.AllowGet);
         }
 

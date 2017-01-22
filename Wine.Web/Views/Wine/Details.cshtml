@@ -23,37 +23,39 @@
         </div>
     </div>
 </div>
-
-<div class="row" style="margin-top: 15px; margin-bottom: 15px">
-    <div class="col-md-2">
-        <button data-target="#addReviewModal" data-toggle="modal" class="btn btn-primary">Add comment</button>
+@if (User.IsInRole("Reviewer"))
+{
+    <div class="row" style="margin-top: 15px; margin-bottom: 15px">
+        <div class="col-md-2">
+            <button data-target="#addReviewModal" data-toggle="modal" class="btn btn-primary">Add comment</button>
+        </div>
     </div>
-</div>
 
-<div id="addReviewModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Add review</h4>
-            </div>
-            <div class="modal-body">
-                <form id="addReview" action="@Url.Action("AddReview")">
-                    <input type="text" name="id" hidden value="@Model.Id">
-                    <div class="form-group">
-                        <label class="control-label">Review:</label>
-                        <textarea class="form-control" name="review"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" form="addReview" class="btn btn-primary">Add review</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+    <div id="addReviewModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add review</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="addReview" action="@Url.Action("AddReview")">
+                        <input type="text" name="id" hidden value="@Model.Id">
+                        <div class="form-group">
+                            <label class="control-label">Review:</label>
+                            <textarea class="form-control" name="review"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" form="addReview" class="btn btn-primary">Add review</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+}
 @foreach (var review in Model.Reviews)
 {
     <div class="row">
@@ -62,7 +64,7 @@
                 <div class="panel-body" style="word-wrap: break-word;">
                     @review.Body
                 </div>
-                <div class="panel-footer">@review.UserName</div>
+                <div class="panel-footer">Created @review.Created.ToString("g") by @review.User.Username</div>
             </div>
         </div>
     </div>

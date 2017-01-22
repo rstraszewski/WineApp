@@ -7,18 +7,18 @@
     <title>@ViewBag.Title - Wine storehouse</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-	<!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
-	@Scripts.Render("~/bundles/jquery")
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.bootstrap.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.bootstrap.min.css")" rel="stylesheet" type="text/css" />
-	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jquery.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jszip.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.all.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
+    @Scripts.Render("~/bundles/jquery")
+    <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -34,7 +34,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Wines", "Index", "Wine")</li>
+                    @if (User.IsInRole("Viewer"))
+                    {
+                        <li>@Html.ActionLink("Wines", "Index", "Wine")</li>
+                    }
+                    @if (User.IsInRole("UserManager"))
+                    {
+                        <li>@Html.ActionLink("Manage users", "Manage", "User")</li>
+                    }
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Logout", "Logout", "User")</li>
@@ -58,7 +65,7 @@
         </footer>
     </div>
 
-    
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

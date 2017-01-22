@@ -1,0 +1,58 @@
+﻿@model System.Collections.Generic.List<string>
+<h3>User roles management</h3>
+<div class="row" style="margin-top: 15px">
+    <div class="col-md-6">
+        @(Html.Kendo().DropDownList()
+              .Name("userList")
+              .Filter(FilterType.Contains)
+              .BindTo(Model)
+              .SelectedIndex(0)
+              .OptionLabel("Select user...")
+              .Events(x => x.Change("userSelected")))
+    </div>
+</div>
+<div class="row" style="margin-top: 15px">
+    <div class="col-md-6">
+        @(Html.Kendo().MultiSelect()
+          .Name("roles")
+          .DataTextField("Name")
+          .Enable(false)
+          .DataValueField("Name")
+          .Placeholder("Add roles or select user...")
+          .AutoBind(false)
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("AllRoles", "User");
+              })
+              .ServerFiltering(true);
+          })
+          .Events(x => x.Change("rolesChanged")))
+    </div>
+</div>
+<script>
+    function userSelected(e) {
+        var name = e.sender.dataItem();
+        if (name !== "Select user...") {
+            $("#roles").data("kendoMultiSelect").enable(true);
+            $.get("/User/Roles", { userName: name }, function (result) {
+                $("#roles").data("kendoMultiSelect").value(result);
+            });
+        } else {
+            $("#roles").data("kendoMultiSelect").enable(false);
+            $("#roles").data("kendoMultiSelect").value([]);
+        }
+
+    }
+
+    function rolesChanged(e) {
+        var roles = e.sender.value();
+        var userName = $("#userList").data("kendoDropDownList").value();
+        $.post("/User/SetRoles", { userName: userName, roles: roles });
+    }
+
+    $(function () {
+        $("#userList").data("kendoDropDownList").value(-1);
+    });
+</script>

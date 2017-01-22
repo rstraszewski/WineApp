@@ -20,6 +20,9 @@ namespace Wine.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var wineDbContext = new WineDbContext();
+            wineDbContext.Database.CreateIfNotExists();
         }
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
@@ -30,7 +33,6 @@ namespace Wine.Web
                 {
                     try
                     {
-                        //let us take out the username now                
                         var formsAuthenticationTicket = FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value);
 
                         if (formsAuthenticationTicket != null)
@@ -43,11 +45,12 @@ namespace Wine.Web
                                 var user = dbContext.Users.Include("Roles").FirstOrDefault(u => u.Username == username);
 
                                 roles = user?.Roles?.ToList();
+                                if (roles != null && roles.Any(x => x.Name == "Administrator"))
+                                {
+                                    roles = dbContext.Roles.ToList();
+                                }
                             }
-                            //let us extract the roles from our own custom cookie
 
-
-                            //Let us set the Pricipal with our user specific details
                             if (roles != null)
                             {
                                 HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(

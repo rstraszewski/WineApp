@@ -73,4 +73,7 @@
     <Build Include="dbo\Tables\UserRoles.sql" />
     <Build Include="dbo\Procedures\GetWineList.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="dbo\initRoles.sql" />
+  </ItemGroup>
 </Project>
